@@ -1,0 +1,3 @@
+FROM scratch
+
+COPY eicar-99.tar /eicar-99.tar

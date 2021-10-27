@@ -1,0 +1,17 @@
+name: 'Virus Scan'
+description: 'Use ClamAV to scan for viruses'
+inputs:
+  mode:
+    description: 'Whether multiple images will be scanned or just the current repo. Modes are "multi" and "single" respectively.'
+    required: true
+    default: 'single'
+  image-filename:
+    description: 'Image list filename. This is only need if mode is "multi".'
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - run: sudo ${{ github.action_path }}/scripts/install-scanner.sh
+      shell: bash
+    - run: sudo ${{ github.action_path }}/scripts/scan.sh ${{inputs.mode}} ${{inputs.image-filename}}
+      shell: bash

@@ -1,0 +1,24 @@
+name: Test Virus Scanning
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  virus_scan:
+    runs-on: ubuntu-latest
+    name: Scan for viruses.
+    steps:
+      - uses: actions/checkout@v2
+      - run:  unset GOPATH
+      - name: Generate Test Images
+        run: |
+            ./tests/generate-test-images.sh
+      - name: Test scan
+        id: test-scan
+        uses: ./
+        with:
+          mode: 'multi'
+          image-filename: 'test-images.txt' 
+        continue-on-error: true
+      - name: Results
+        run: ./tests/verify.sh

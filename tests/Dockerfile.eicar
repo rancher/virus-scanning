@@ -1,0 +1,3 @@
+FROM busybox
+
+RUN wget https://www.eicar.org/download/eicar.com.txt
